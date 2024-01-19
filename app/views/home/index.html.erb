@@ -1,0 +1,37 @@
+<div class="w-4/5 mx-auto mt-10">
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+      <thead class="ltr:text-left rtl:text-right">
+        <tr>
+          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">ISBN</th>
+          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">タイトル</th>
+          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+            <% if params[:q] == 'price_asc' %>
+              <%= link_to '価格', root_path(q: :price_desc), class: 'text-blue-600 font-bold' %>
+            <% else %>
+              <%= link_to '価格', root_path(q: :price_asc), class: 'text-blue-600 font-bold' %>
+            <% end %>
+          </th>
+          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+            <% if params[:q] == 'published_on_asc' %>
+              <%= link_to '出版日', root_path(q: :published_on_desc), class: 'text-blue-600 font-bold' %>
+            <% else %>
+              <%= link_to '出版日', root_path(q: :published_on_asc), class: 'text-blue-600 font-bold' %>
+            <% end %>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody class="divide-y divide-gray-200">
+        <% @books.each do |book| %>
+          <tr class="odd:bg-gray-50">
+            <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><%= book.isbn %></td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= book.title %></td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= book.price %></td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= book.published_on %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
