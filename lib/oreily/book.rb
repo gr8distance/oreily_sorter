@@ -31,7 +31,7 @@ module Oreily
 
     private
 
-    def intialize_from_array(array)
+    def intialize_from_array(record)
       @isbn = record[0]
       @title = record[1]
       @price = record[2].gsub(',', '').to_i
