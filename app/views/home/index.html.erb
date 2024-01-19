@@ -1,4 +1,6 @@
 <div class="w-4/5 mx-auto mt-10">
+  <%= render 'search' %>
+
   <div class="overflow-x-auto">
     <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
       <thead class="ltr:text-left rtl:text-right">
@@ -24,8 +26,10 @@
 
       <tbody class="divide-y divide-gray-200">
         <% @books.each do |book| %>
-          <tr class="odd:bg-gray-50">
-            <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><%= link_to book.isbn, book.to_url, class: 'text-blue-500' %></td>
+          <tr class="odd:bg-gray-50 record" id="<%= book.isbn %>">
+            <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+              <%= link_to book.isbn, book.to_url, class: 'text-blue-500', target: :_blank %>
+            </td>
             <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= book.title %></td>
             <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= book.price %></td>
             <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= book.published_on %></td>
@@ -35,3 +39,32 @@
     </table>
   </div>
 </div>
+
+
+<script>
+ const puts = (s) => console.log(s);
+ const getElementsByClassName = (className) => Array.from(document.getElementsByClassName(className));
+ const recordElms = getElementsByClassName('record');
+ const records = recordElms.map((record) => {
+    const isbn = record.id;
+    const title = record.children[1].innerText;
+    const price = record.children[2].innerText;
+    const publishedOn = record.children[3].innerText;
+    return { isbn, title, price, publishedOn };
+ });
+
+ const searchField = document.getElementById('search');
+ searchField.onkeyup = (e) => {
+   const keyword = e.target.value;
+   const filteredRecords = records.filter((record) => {
+     return record.title.includes(keyword);
+   });
+   recordElms.forEach((record) => {
+     record.style.display = 'none';
+   });
+   filteredRecords.forEach((record) => {
+     const recordElm = document.getElementById(record.isbn);
+     recordElm.style.display = 'table-row';
+   });
+ };
+</script>
