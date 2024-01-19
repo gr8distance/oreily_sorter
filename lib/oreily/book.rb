@@ -16,6 +16,15 @@ module Oreily
       "#{BASE_URL}/books/#{isbn.gsub('-', '')}"
     end
 
+    def to_model
+      ::Book.new(
+        isbn: isbn,
+        title: title,
+        price: price,
+        published_on: published_on
+      )
+    end
+
     private
 
     def parse_date(date)
